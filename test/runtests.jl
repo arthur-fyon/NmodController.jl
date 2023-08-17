@@ -2,5 +2,6 @@ using NmodController
 using Test
 
 @testset "NmodController.jl" begin
-    # Write your tests here.
+    # Tests concerning data structure initialization
+    @test include("initializationTest.jl")
 end
