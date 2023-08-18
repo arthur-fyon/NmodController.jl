@@ -29,6 +29,8 @@ struct NeuronCB
     numberOfIonCurrents::Int64
     ionCurrents::Vector{IonCurrent}
     maximumConductances::Vector{Float64}
+    leakageConductance::Float64
+    reversaleLeakagePotential::Float64
     calciumDynamics::Union{CalciumDynamic, Bool}
     globalCalciumDependency::Bool
     globalMgDependency::Bool
@@ -105,8 +107,9 @@ function initializeCalciumDynamics(currentNames::Union{String, Vector{String}}, 
 end
 
 # Function that initializes neuronal model
-function initializeNeuronModel(ionCurrents::Union{IonCurrent, Vector{IonCurrent}}; C::Float64=1., 
-    calciumDynamics::Union{CalciumDynamic, Bool}=false, maximumConductances::Union{Vector{Int64}, Int64, Vector{Float64}, Float64}=0.)
+function initializeNeuronModel(ionCurrents::Union{IonCurrent, Vector{IonCurrent}}; C::Float64=1., leakageConductance::Union{Float64, Int64}=1., 
+    reversaleLeakagePotential::Union{Float64, Int64}=-50., calciumDynamics::Union{CalciumDynamic, Bool}=false, 
+    maximumConductances::Union{Vector{Int64}, Int64, Vector{Float64}, Float64}=0.)
 
     # If there is only one current in the model, throw error
     if isa(ionCurrents, IonCurrent)
@@ -134,9 +137,9 @@ function initializeNeuronModel(ionCurrents::Union{IonCurrent, Vector{IonCurrent}
         error("Please provide a calciumDynamics of type CalciumDynamic!")
     end
 
-    # If the user did not enter any maximumConductances, fill a vector with zeros
+    # If the user did not enter any maximumConductances, fill a vector with NaN
     if isa(maximumConductances, Float64) && maximumConductances == 0.
-        maximumConductances = zeros(numberOfIonCurrents)
+        maximumConductances = zeros(numberOfIonCurrents) .+ NaN
     # If the length of the maximum ion channels is the same as the one of the ion currents structure, throw error
     elseif (isa(maximumConductances, Vector{Float64}) || isa(maximumConductances, Vector{Int64})) && length(maximumConductances) ≠ numberOfIonCurrents
         error("Length of ionCurrents and maximumConductances must be the same!")
@@ -146,5 +149,6 @@ function initializeNeuronModel(ionCurrents::Union{IonCurrent, Vector{IonCurrent}
     end
 
     # Create the NeuronCB structure
-    return NeuronCB(C, numberOfIonCurrents, ionCurrents, Vector{Float64}(maximumConductances), calciumDynamics, globalCalciumDependency, globalMgDependency, NaN)
+    return NeuronCB(C, numberOfIonCurrents, ionCurrents, Vector{Float64}(maximumConductances), Float64(leakageConductance), 
+        Float64(reversaleLeakagePotential), calciumDynamics, globalCalciumDependency, globalMgDependency, NaN)
 end
