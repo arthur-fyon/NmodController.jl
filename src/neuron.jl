@@ -8,7 +8,7 @@ struct IonCurrent
     numberOfGatings::Int64
     exponents::Vector{Int64}
     steadyStateGatings::Vector{Function}
-    timeConstants::Vector{Any}
+    timeConstants::Vector{Function}
     reversalPotential::Float64
     calciumDependency::Bool
     MgDependency::Bool
@@ -34,19 +34,26 @@ struct NeuronCB
     calciumDynamics::Union{CalciumDynamic, Bool}
     globalCalciumDependency::Bool
     globalMgDependency::Bool
-    Vth::Float64
 end
 
 # Function that initializes a certain type of current
 function initializeCurrent(name::String, reversalPotential::Union{Int64, Float64}; numberOfGatings::Int64=1, exponents::Union{Int64, Vector{Int64}}=1,
-    activationSteadyStateGating::Union{Function, Float64}=0., activationTimeConstants::Union{Function, Float64, Int64}=0.,
-    inactivationSteadyStateGating::Union{Function, Float64}=0., inactivationTimeConstants::Union{Function, Float64, Int64}=0.,
+    activationSteadyStateGating::Union{Function, Float64}=0., activationTimeConstant::Union{Function, Float64, Int64}=NaN,
+    inactivationSteadyStateGating::Union{Function, Float64}=0., inactivationTimeConstant::Union{Function, Float64, Int64}=NaN,
     calciumDependency::Bool=false, MgDependency::Bool=false)
 
     # If no activation steady state function is provided, throw error
     if !(typeof(activationSteadyStateGating) <: Function)
         error("Please enter a steady state activation gating value of type Function!")
     end
+
+    # If no activation time constant is provided, throw error
+    if !(typeof(activationTimeConstant) <: Function) && isnan(activationTimeConstant)
+        error("Please enter an activation time constant of type Int64, Float64 or Function!")
+    end
+
+    # Build the activation time constant function
+    activationTau_Function = transformToFunction(activationTimeConstant)
 
     # If we only have an activation gating variable
     if numberOfGatings == 1
@@ -57,7 +64,7 @@ function initializeCurrent(name::String, reversalPotential::Union{Int64, Float64
 
         # Create the IonCurrent structure
         return IonCurrent(name, numberOfGatings, [exponents, ], [activationSteadyStateGating, ],
-            [activationTimeConstants, ], Float64(reversalPotential), calciumDependency, MgDependency)
+            [activationTau_Function, ], Float64(reversalPotential), calciumDependency, MgDependency)
 
     # If we have both an activation and inactivation gating variables
     elseif numberOfGatings == 2
@@ -70,9 +77,17 @@ function initializeCurrent(name::String, reversalPotential::Union{Int64, Float64
             error("Please provide a steady state inactivation gating value of type Function!")
         end
 
+        # If no inactivation time constant is provided, throw error
+        if !(typeof(inactivationTimeConstant) <: Function) && isnan(inactivationTimeConstant)
+            error("Please enter an inactivation time constant of type Int64, Float64 or Function!")
+        end
+
+        # Build the activation time constant function
+        inactivationTau_Function = transformToFunction(inactivationTimeConstant)
+
         # Create the IonCurrent structure
         return IonCurrent(name, numberOfGatings, exponents, [activationSteadyStateGating, inactivationSteadyStateGating],
-            [activationTimeConstants, inactivationTimeConstants], Float64(reversalPotential), calciumDependency, MgDependency)
+            [activationTau_Function, inactivationTau_Function], Float64(reversalPotential), calciumDependency, MgDependency)
 
     # If less than 1 or more than 2 gating variables are provided, throw error
     else
@@ -150,5 +165,7 @@ function initializeNeuronModel(ionCurrents::Union{IonCurrent, Vector{IonCurrent}
 
     # Create the NeuronCB structure
     return NeuronCB(C, numberOfIonCurrents, ionCurrents, Vector{Float64}(maximumConductances), Float64(leakageConductance), 
-        Float64(reversaleLeakagePotential), calciumDynamics, globalCalciumDependency, globalMgDependency, NaN)
+        Float64(reversaleLeakagePotential), calciumDynamics, globalCalciumDependency, globalMgDependency)
 end
+
+
