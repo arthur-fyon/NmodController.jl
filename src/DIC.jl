@@ -10,6 +10,11 @@ function computeThresholdVoltage(gf::Function, gs::Function, gu::Function)
     # While the input conductance is still positive, go further
     while gin(highBound) > 0.
         highBound += 0.1
+
+        # If no negative value of gin, throw error
+        if highBound > 80.
+            error("No threshold voltage found for this model, input conductance always positive!")
+        end
     end
 
     Vth = bisection(gin, lowBound, highBound)
