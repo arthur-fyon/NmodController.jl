@@ -20,3 +20,27 @@ function transformToFunction(constant)
         return constant
     end
 end
+
+# Bisection function
+function bisection(f::Function, a::Union{Float64, Int64}, b::Union{Float64, Int64}; tol=1e-6::Float64, max_iter=100::Int64)
+    # If no passing through 0, throw error
+    if f(a) * f(b) > 0
+        error("Function must have different signs at interval endpoints!")
+    end
+    
+    # Start the bisection loop
+    iter = 0
+    while (b - a) / 2 > tol && iter < max_iter
+        c = (a + b) / 2
+        if f(c) == 0
+            return c
+        elseif f(c) * f(a) < 0
+            b = c
+        else
+            a = c
+        end
+        iter += 1
+    end
+    
+    return (a + b) / 2
+end

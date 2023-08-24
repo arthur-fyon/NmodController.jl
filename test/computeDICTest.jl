@@ -74,12 +74,11 @@ tauSlow = tau_hNa
 tauUltraslow = tau_mH
 
 # Computing S
-S = computeS(STG, tauFast, tauSlow, tauUltraslow, tauCa=500000.)
+S = computeDICs(STG, tauFast, tauSlow, tauUltraslow, tauCa=500000., onlyS=true)
 
 # Computing DICs
-gf(V) = S(V)[1, :]' * STG.maximumConductances + 1.
-gs(V) = S(V)[2, :]' * STG.maximumConductances
-gu(V) = S(V)[3, :]' * STG.maximumConductances
+gf, gs, gu = computeDICs(STG, tauFast, tauSlow, tauUltraslow, tauCa=500000.)
 
+# Returning the test value
 tp = 1.25
-return (isa(gf(tp), Float64) && isa(gs(tp), Float64) && isa(gu(tp), Float64) && size(S(tp)) == (3, 7))
+return (isa(S(tp), Matrix{Float64}) && size(S(tp)) == (3, 7) && isa(gf(tp), Float64) && isa(gs(tp), Float64) && isa(gu(tp), Float64))

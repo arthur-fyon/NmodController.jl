@@ -34,5 +34,6 @@ export computeWeightedCaElementOfS
 export computeWeights
 export logDist
 export computeS
+export computeDICs
 
 end
