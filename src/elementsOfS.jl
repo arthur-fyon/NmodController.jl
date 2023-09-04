@@ -308,7 +308,7 @@ function computeWeightedCaElementOfS(ionCurrent::IonCurrent, tauFast::Function, 
 end
 
 # Function that computes weighted elements of the sensitivity matrix that are Mg dependent
-function computeWeightedCaElementOfS(ionCurrent::IonCurrent, tauFast::Function, tauSlow::Function, tauUltraslow::Function, Mg::Float64)
+function computeWeightedMgElementOfS(ionCurrent::IonCurrent, tauFast::Function, tauSlow::Function, tauUltraslow::Function, Mg::Float64)
     # If the current only has 1 gating variable
     if ionCurrent.numberOfGatings == 1
         # Compute the weights

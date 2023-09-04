@@ -7,6 +7,7 @@ include("mathFunctions.jl")
 include("neuron.jl")
 include("elementsOfS.jl")
 include("DIC.jl")
+include("writeSimuFiles.jl")
 
 # Export meaningful functions
 export boltz
@@ -35,5 +36,7 @@ export computeWeights
 export logDist
 export computeS
 export computeDICs
+export computeThresholdVoltage
+export writeUncontrolledODEs
 
 end
