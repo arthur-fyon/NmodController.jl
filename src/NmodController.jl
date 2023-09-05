@@ -38,5 +38,6 @@ export computeS
 export computeDICs
 export computeThresholdVoltage
 export writeUncontrolledODEs
+export writeControlledODEs
 
 end

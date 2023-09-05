@@ -70,7 +70,7 @@ STG = initializeNeuronModel(ionCurrents, calciumDynamics=CaDyn, leakageConductan
 
 # Defining some timescales
 tauFast = tau_mNa
-tauSlow = tau_hNa
+tauSlow = tau_mKd
 tauUltraslow = tau_mH
 
 # Computing S
