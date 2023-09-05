@@ -68,20 +68,16 @@ ionCurrents = [NaCurrent, CaTCurrent, CaSCurrent, ACurrent, KCaCurrent, KdCurren
 gvec = [800., 3., 3., 80., 60., 90., 0.1]
 STG = initializeNeuronModel(ionCurrents, calciumDynamics=CaDyn, leakageConductance=0.01, reversaleLeakagePotential=Vleak, maximumConductances=gvec)
 
-# Defining some timescales
-tauFast = tau_mNa
-tauSlow = tau_mKd
-tauUltraslow = tau_mH
+# Writing uncontrolled and controlled simulation files
+writeUncontrolledODEs(STG)
+writeControlledODEs(STG, ["CaS", "A"], ["s", "u"])
 
-# Computing S
-S = computeDICs(STG, tauFast, tauSlow, tauUltraslow, tauCa=500000., onlyS=true)
+# Computing return flag
+flag = false
+if isfile("CBModelODEs.jl") && isfile("ControlledCBModelODEs.jl")
+    rm("CBModelODEs.jl")
+    rm("ControlledCBModelODEs.jl")
+    flag = true
+end
 
-# Computing DICs
-gf, gs, gu = computeDICs(STG, tauFast, tauSlow, tauUltraslow, tauCa=500000.)
-
-# Computing the threshold voltage
-Vth = computeThresholdVoltage(gf, gs, gu)
-
-# Returning the test value
-tp = 1.25
-return (isa(S(tp), Matrix{Float64}) && size(S(tp)) == (3, 7) && isa(gf(tp), Float64) && isa(gs(tp), Float64) && isa(gu(tp), Float64) && isa(Vth, Float64))
+return flag

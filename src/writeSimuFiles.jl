@@ -214,6 +214,11 @@ end
 
 # Function that writes controlled conductance-based model ODE equations in a jl files
 function writeControlledODEs(neuron::NeuronCB, controlledConductances::Vector{String}, controlledDICs::Vector{String}; filename::String="ControlledCBModelODEs.jl")
+    # If there are more DICs controlled than modulated conductances, throw error
+    if length(controlledDICs) > length(controlledConductances)
+        error("There should be less controlled neuronal feedback gains than modulated conductances!")
+    end
+
     # If filename last 3 carachters are not ".jl", throw error
     if filename[end-2:end] ≠ ".jl"
         error("Filename must be a Julia file, i.e. being terminated by .jl!")

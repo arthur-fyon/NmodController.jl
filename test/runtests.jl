@@ -7,4 +7,7 @@ using Test
 
     # Tests concerning DIC computation
     @test include("computeDICTest.jl")
+
+    # Tests concerning simulation files writing
+    @test include("simulationFilesTest.jl")
 end
