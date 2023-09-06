@@ -5,7 +5,6 @@ notifications:
 julia:
   - nightly
 os:
-  - linux
   - osx
 arch:
   - x64
