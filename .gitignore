@@ -2,6 +2,6 @@
 *.jl.cov
 *.jl.mem
 /Manifest.toml
-.github/workflows/CI.yml
-.github/workflows/CompatHelper.yml
-.github/workflows/TagBot.yml
+/.github/workflows/CI.yml
+/.github/workflows/CompatHelper.yml
+/.github/workflows/TagBot.yml
