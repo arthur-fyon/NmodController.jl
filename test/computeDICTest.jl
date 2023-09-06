@@ -83,5 +83,5 @@ gf, gs, gu = computeDICs(STG, tauFast, tauSlow, tauUltraslow, tauCa=500000.)
 Vth = computeThresholdVoltage(gf, gs, gu)
 
 # Returning the test value
-tp = 1.25
+tp = 0.
 return (isa(S(tp), Matrix{Float64}) && size(S(tp)) == (3, 7) && isa(gf(tp), Float64) && isa(gs(tp), Float64) && isa(gu(tp), Float64) && isa(Vth, Float64))
