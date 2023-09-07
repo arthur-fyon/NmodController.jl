@@ -184,7 +184,6 @@ function writeUncontrolledODEs(neuron::NeuronCB; filename::String="CBModelODEs.j
         write(f, line)
         
         # Looping over all Ca currents of the model
-        ionCurrentCa = neuron.ionCurrents[currentIndices]
         for (j, ionCurrent) in enumerate(ionCurrentCa)
             line = string(calciumDynamics.coefficients[j])
             write(f, line)
@@ -476,7 +475,6 @@ function writeControlledODEs(neuron::NeuronCB, controlledConductances::Vector{St
         write(f, line)
         
         # Looping over all Ca currents of the model
-        ionCurrentCa = neuron.ionCurrents[currentIndices]
         for (j, ionCurrent) in enumerate(ionCurrentCa)
             line = string(calciumDynamics.coefficients[j])
             write(f, line)
