@@ -97,8 +97,33 @@ if isfile("CBModelODEs.jl") && isfile("ControlledCBModelODEs.jl")
 end
 
 # Writing uncontrolled and controlled simulation files
+writeUncontrolledODEs(SimpleSTG)
+writeControlledODEs(SimpleSTG, ["CaS", "A"], ["f", "u"])
+
+# Computing return flag
+flag = false
+if isfile("CBModelODEs.jl") && isfile("ControlledCBModelODEs.jl")
+    rm("CBModelODEs.jl")
+    rm("ControlledCBModelODEs.jl")
+    flag = true
+end
+
+# Writing uncontrolled and controlled simulation files
 writeUncontrolledODEs(DA)
 writeControlledODEs(DA, ["CaN", "CaL"], ["s"])
+
+# Computing return flag
+if isfile("CBModelODEs.jl") && isfile("ControlledCBModelODEs.jl")
+    rm("CBModelODEs.jl")
+    rm("ControlledCBModelODEs.jl")
+    flag = true
+else
+    flag = false
+end
+
+# Writing uncontrolled and controlled simulation files
+writeUncontrolledODEs(DA2)
+writeControlledODEs(DA2, ["CaN", "CaL"], ["s"])
 
 # Computing return flag
 if isfile("CBModelODEs.jl") && isfile("ControlledCBModelODEs.jl")

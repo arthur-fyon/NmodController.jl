@@ -58,7 +58,7 @@ SimpleSTG_S = computeDICs(SimpleSTG, STG_tauFast, STG_tauSlow, STG_tauUltraslow,
 
 # Computing DICs
 STG_gf, STG_gs, STG_gu = computeDICs(STG, STG_tauFast, STG_tauSlow, STG_tauUltraslow, tauCa=500000.)
-SimpleSTG_gf, SimpleSTG_gs, SimpleSTG_gu = computeDICs(SimpleSTG, STG_tauFast, STG_tauSlow, STG_tauUltraslow, tauCa=500000.)
+SimpleSTG_gf, SimpleSTG_gs, SimpleSTG_gu = computeDICs(SimpleSTG, STG_tauFast, STG_tauSlow, STG_tauUltraslow, tauCa=500000., scaled=false)
 
 # Computing the threshold voltage
 STG_Vth = computeThresholdVoltage(STG_gf, STG_gs, STG_gu)
