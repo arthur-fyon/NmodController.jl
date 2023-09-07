@@ -143,7 +143,7 @@ function initializeNeuronModel(ionCurrents::Union{IonCurrent, Vector{IonCurrent}
         if ionCurr.calciumDependency
             globalCalciumDependency = true
         elseif ionCurr.MgDependency
-            globalMgDependency = false
+            globalMgDependency = true
         end
     end
 

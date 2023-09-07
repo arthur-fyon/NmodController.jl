@@ -54,7 +54,7 @@ function computeUnweightedBigated1CaElementOfS(ionCurrent::IonCurrent, CaEquilib
     exp2 = ionCurrent.exponents[2]
     partialDerivate1OfGating1 = lambdify(partialDiff1(ionCurrent.steadyStateGatings[1]))
     Sij1(V) = exp1*ionCurrent.steadyStateGatings[1](V, CaEquilibrium(V))^(exp1-1) * 
-        steadyStateGatings[2](V)^exp2 * (V-ionCurrent.reversalPotential) * 
+        ionCurrent.steadyStateGatings[2](V, CaEquilibrium(V))^exp2 * (V-ionCurrent.reversalPotential) * 
         partialDerivate1OfGating1(V, CaEquilibrium(V))
 
     # Compute the part of the unweighted element of S by derivating only voltage-dependent calcium
@@ -63,7 +63,7 @@ function computeUnweightedBigated1CaElementOfS(ionCurrent::IonCurrent, CaEquilib
     partialDerivate2OfGating1 = lambdify(partialDiff2(ionCurrent.steadyStateGatings[1]))
     derivativeOfCa = lambdify(SymPy.diff(CaEquilibrium))
     Sij2(V) = exp1*ionCurrent.steadyStateGatings[1](V, CaEquilibrium(V))^(exp1-1) *
-        steadyStateGatings[2](V)^exp2 * (V-ionCurrent.reversalPotential) * 
+        ionCurrent.steadyStateGatings[2](V, CaEquilibrium(V))^exp2 * (V-ionCurrent.reversalPotential) * 
         partialDerivate2OfGating1(V, CaEquilibrium(V)) * derivativeOfCa(V)
 
     return Sij1, Sij2
@@ -76,7 +76,7 @@ function computeUnweightedBigated2CaElementOfS(ionCurrent::IonCurrent, CaEquilib
     exp2 = ionCurrent.exponents[2]
     partialDerivate1OfGating2 = lambdify(partialDiff1(ionCurrent.steadyStateGatings[2]))
     Sij1(V) = ionCurrent.steadyStateGatings[1](V, CaEquilibrium(V))^exp1 * 
-        exp2*steadyStateGatings[2](V)^(exp2-1) * (V-ionCurrent.reversalPotential) * 
+        exp2*ionCurrent.steadyStateGatings[2](V, CaEquilibrium(V))^(exp2-1) * (V-ionCurrent.reversalPotential) * 
         partialDerivate1OfGating2(V, CaEquilibrium(V))
 
     # Compute the part of the unweighted element of S by derivating only voltage-dependent calcium
@@ -85,7 +85,7 @@ function computeUnweightedBigated2CaElementOfS(ionCurrent::IonCurrent, CaEquilib
     partialDerivate2OfGating2 = lambdify(partialDiff2(ionCurrent.steadyStateGatings[2]))
     derivativeOfCa = lambdify(SymPy.diff(CaEquilibrium))
     Sij2(V) = ionCurrent.steadyStateGatings[1](V, CaEquilibrium(V))^exp1 *
-        exp2*steadyStateGatings[2](V)^(exp2-1) * (V-ionCurrent.reversalPotential) * 
+        exp2*ionCurrent.steadyStateGatings[2](V, CaEquilibrium(V))^(exp2-1) * (V-ionCurrent.reversalPotential) * 
         partialDerivate2OfGating2(V, CaEquilibrium(V)) * derivativeOfCa(V)
 
     return Sij1, Sij2
@@ -97,7 +97,7 @@ function computeUnweightedUnigatedMgElementOfS(ionCurrent::IonCurrent, Mg::Float
     # Compute the unweighted element of S
     exp1 = ionCurrent.exponents[1]
     derivateOfGating1 = lambdify(partialDiff1(ionCurrent.steadyStateGatings[1]))
-    Sij(V) = exp1*ionCurrent.steadyStateGatings[1](V)^(exp1-1) * (V-ionCurrent.reversalPotential) * derivateOfGating1(V, Mg)
+    Sij(V) = exp1*ionCurrent.steadyStateGatings[1](V, Mg)^(exp1-1) * (V-ionCurrent.reversalPotential) * derivateOfGating1(V, Mg)
     return Sij
 end
 
@@ -107,7 +107,7 @@ function computeUnweightedBigated1MgElementOfS(ionCurrent::IonCurrent, Mg::Float
     exp1 = ionCurrent.exponents[1]
     exp2 = ionCurrent.exponents[2]
     derivateOfGating1 = lambdify(partialDiff1(ionCurrent.steadyStateGatings[1]))
-    Sij(V) = exp1*ionCurrent.steadyStateGatings[1](V)^(exp1-1) * ionCurrent.steadyStateGatings[2](V)^exp2 * (V-ionCurrent.reversalPotential) * derivateOfGating1(V, Mg)
+    Sij(V) = exp1*ionCurrent.steadyStateGatings[1](V, Mg)^(exp1-1) * ionCurrent.steadyStateGatings[2](V, Mg)^exp2 * (V-ionCurrent.reversalPotential) * derivateOfGating1(V, Mg)
     return Sij
 end
 
@@ -117,7 +117,7 @@ function computeUnweightedBigated2MgElementOfS(ionCurrent::IonCurrent, Mg::Float
     exp1 = ionCurrent.exponents[1]
     exp2 = ionCurrent.exponents[2]
     derivateOfGating2 = lambdify(partialDiff1(ionCurrent.steadyStateGatings[2]))
-    Sij(V) = ionCurrent.steadyStateGatings[1](V)^exp1 * exp2*ionCurrent.steadyStateGatings[2](V)^(exp2-1) * (V-ionCurrent.reversalPotential) * derivateOfGating2(V, Mg)
+    Sij(V) = ionCurrent.steadyStateGatings[1](V, Mg)^exp1 * exp2*ionCurrent.steadyStateGatings[2](V, Mg)^(exp2-1) * (V-ionCurrent.reversalPotential) * derivateOfGating2(V, Mg)
     return Sij
 end
 
