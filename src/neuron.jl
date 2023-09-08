@@ -1,7 +1,3 @@
-# Prebuild gating functions
-boltz(V, A, B) = 1 / (1 + exp((V+A)/B))
-tauX(V, A, B, D, E) = A - B / (1+exp((V+D)/E))
-
 # Data structure that defines a neuronal current
 struct IonCurrent
     name::String

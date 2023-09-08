@@ -10,8 +10,6 @@ include("DIC.jl")
 include("writeSimuFiles.jl")
 
 # Export meaningful functions
-export boltz
-export tauX
 export IonCurrent
 export CalciumDynamic
 export NeuronCB
