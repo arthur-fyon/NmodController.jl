@@ -1,19 +1,4 @@
-@doc"""
-    struct IonCurrent
-        name::String
-        numberOfGatings::Int64
-        exponents::Vector{Int64}
-        steadyStateGatings::Vector{Function}
-        timeConstants::Vector{Function}
-        reversalPotential::Float64
-        calciumDependency::Bool
-        MgDependency::Bool
-    end
-
-Data structure definif an ionic current in a conductance based model.
-
-To initialize a certain type of current, please use the function initializeCurrent
-"""
+"
 struct IonCurrent
     name::String
     numberOfGatings::Int64
@@ -22,6 +7,29 @@ struct IonCurrent
     timeConstants::Vector{Function}
     reversalPotential::Float64
     calciumDependency::Bool
+    MgDependency::Bool
+end
+
+Data structure defining an ionic current in a conductance based model.
+
+To initialize a certain type of current, please use the function initializeCurrent
+"
+struct IonCurrent
+    "Name of the ionic current"
+    name::String
+    "Number of gating variables in the ionic current"
+    numberOfGatings::Int64
+    "Exponents of gating variables"
+    exponents::Vector{Int64}
+    "Equilibrium functions of gating variables"
+    steadyStateGatings::Vector{Function}
+    "Time constant functions of gating variables"
+    timeConstants::Vector{Function}
+    "Reversal Nernst potential of the ion"
+    reversalPotential::Float64
+    "Flag indicating if the ionic current depends on the calcium"
+    calciumDependency::Bool
+    "Flag indicating if the ionic current depends on the magnesium"
     MgDependency::Bool
 end
 
