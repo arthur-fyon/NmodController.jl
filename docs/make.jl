@@ -3,7 +3,7 @@ using Documenter
 makedocs(
     sitename = "NmodController",
     format = Documenter.HTML(),
-    modules = [NmodController]
+    modules = Module[]
 )
 
 # Documenter can also automatically deploy documentation to gh-pages.
