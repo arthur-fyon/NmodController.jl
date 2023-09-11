@@ -2,6 +2,3 @@
 *.jl.cov
 *.jl.mem
 /Manifest.toml
-CI.yml
-CompatHelper.yml
-TagBot.yml
