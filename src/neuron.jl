@@ -1,14 +1,14 @@
 "
-struct IonCurrent
-    name::String
-    numberOfGatings::Int64
-    exponents::Vector{Int64}
-    steadyStateGatings::Vector{Function}
-    timeConstants::Vector{Function}
-    reversalPotential::Float64
-    calciumDependency::Bool
-    MgDependency::Bool
-end
+    struct IonCurrent
+        name::String
+        numberOfGatings::Int64
+        exponents::Vector{Int64}
+        steadyStateGatings::Vector{Function}
+        timeConstants::Vector{Function}
+        reversalPotential::Float64
+        calciumDependency::Bool
+        MgDependency::Bool
+    end
 
 Data structure defining an ionic current in a conductance based model.
 
