@@ -12,7 +12,7 @@
 
 Data structure defining an ionic current in a conductance based model.
 
-To initialize a certain type of current, please use the function initializeCurrent
+To initialize a certain type of current, please use the function initializeCurrent.
 "
 struct IonCurrent
     "Name of the ionic current"
@@ -33,25 +33,67 @@ struct IonCurrent
     MgDependency::Bool
 end
 
-# Data structure that defines calcium calcium dynamics
+"
+    struct CalciumDynamic
+        numberOfCurrents::Int64
+        currentNames::Vector{String}
+        coefficients::Vector{Float64}
+        nernstEquilibriumValue::Float64
+        timeConstant::Float64
+    end
+
+Data structure defining an ODE for intracellular calcium dynamics.
+
+To initialize a certain calcium dynamics, please use the function initializeCalciumDynamics.
+"
 struct CalciumDynamic
+    "Number of calcium ionic current involved in the ODE"
     numberOfCurrents::Int64
+    "Name(s) of the calcium ionic current(s) involved in the ODE"
     currentNames::Vector{String}
+    "Coefficient(s) of the calcium ionic current(s) involved in the ODE"
     coefficients::Vector{Float64}
+    "Equilibrium value of the intracellular calcium without any current"
     nernstEquilibriumValue::Float64
+    "Time constant of the intracellular calcium"
     timeConstant::Float64
 end
 
-# Data structure that defines the neuronal model
+"
+    struct NeuronCB
+        C::Float64
+        numberOfIonCurrents::Int64
+        ionCurrents::Vector{IonCurrent}
+        maximumConductances::Vector{Float64}
+        leakageConductance::Float64
+        reversaleLeakagePotential::Float64
+        calciumDynamics::Union{CalciumDynamic, Bool}
+        globalCalciumDependency::Bool
+        globalMgDependency::Bool
+    end
+
+Data structure defining a complete conductance based model.
+
+To initialize a certain type of model, please use the function initializeNeuronModel.
+"
 struct NeuronCB
+    "Capacitance of the membrane"
     C::Float64
+    "Number of active ionic current in the model (without the leakage one)"
     numberOfIonCurrents::Int64
+    "Vector of the ionic current data structures"
     ionCurrents::Vector{IonCurrent}
+    "Vector of the maximum ion channel conductances (without the leakage one)"
     maximumConductances::Vector{Float64}
+    "Leakage conductance"
     leakageConductance::Float64
+    "Reversal Nernst potential for the leakage current"
     reversaleLeakagePotential::Float64
+    "Data structure for describing intracellular calcium dynamics ODE"
     calciumDynamics::Union{CalciumDynamic, Bool}
+    "Flag indicating if the model depends on the calcium"
     globalCalciumDependency::Bool
+    "Flag indicating if the model depends on the magnesium"
     globalMgDependency::Bool
 end
 
