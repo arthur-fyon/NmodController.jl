@@ -1,4 +1,4 @@
-"
+raw"
 struct IonCurrent
     name::String
     numberOfGatings::Int64
