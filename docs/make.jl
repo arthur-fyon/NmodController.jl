@@ -1,5 +1,4 @@
 using Documenter
-using NmodController
 
 makedocs(
     sitename = "NmodController",
