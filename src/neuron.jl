@@ -1,4 +1,19 @@
-# Data structure that defines a neuronal current
+"""
+    struct IonCurrent
+        name::String
+        numberOfGatings::Int64
+        exponents::Vector{Int64}
+        steadyStateGatings::Vector{Function}
+        timeConstants::Vector{Function}
+        reversalPotential::Float64
+        calciumDependency::Bool
+        MgDependency::Bool
+    end
+
+Data structure definif an ionic current in a conductance based model.
+
+To initialize a certain type of current, please use the function initializeCurrent
+"""
 struct IonCurrent
     name::String
     numberOfGatings::Int64
