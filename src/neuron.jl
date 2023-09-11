@@ -1,4 +1,4 @@
-"""
+@doc"""
     struct IonCurrent
         name::String
         numberOfGatings::Int64
