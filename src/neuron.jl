@@ -1,7 +1,3 @@
-# Prebuild gating functions
-boltz(V, A, B) = 1 / (1 + exp((V+A)/B))
-tauX(V, A, B, D, E) = A - B / (1+exp((V+D)/E))
-
 # Data structure that defines a neuronal current
 struct IonCurrent
     name::String
@@ -143,7 +139,7 @@ function initializeNeuronModel(ionCurrents::Union{IonCurrent, Vector{IonCurrent}
         if ionCurr.calciumDependency
             globalCalciumDependency = true
         elseif ionCurr.MgDependency
-            globalMgDependency = false
+            globalMgDependency = true
         end
     end
 

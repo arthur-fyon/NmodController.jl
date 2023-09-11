@@ -1,72 +1,88 @@
-# Initializing Nernst reversalPotential
-VNa = 50. # Sodium reversal potential
-VK = -80. # Potassium reversal potential
-VCa = 80. # Calcium reversal potential
-VH = -20. # Reversal potential for the H-current (permeable to both sodium and potassium ions)
-Vleak = -50. # Reversal potential of leak channels
-
+### STG model
 # Building Na current
-mNa_inf(V) = boltz(V, 25.5, -5.29)
-tau_mNa(V) = tauX(V, 1.32, 1.26, 120., -25.)
-hNa_inf(V) = boltz(V, 48.9, 5.18)
-tau_hNa(V) = (0.67 / (1 + exp((V+62.9)/-10.0))) * (1.5 + 1 / (1+exp((V+34.9)/3.6)))
-NaCurrent = initializeCurrent("Na", VNa, numberOfGatings=2, exponents=[3, 1],
-    activationSteadyStateGating=mNa_inf, activationTimeConstant=tau_mNa,
-    inactivationSteadyStateGating=hNa_inf, inactivationTimeConstant=tau_hNa)
+STG_NaCurrent = initializeCurrent("Na", STG_VNa, numberOfGatings=2, exponents=[3, 1],
+    activationSteadyStateGating=STG_mNa_inf, activationTimeConstant=STG_tau_mNa,
+    inactivationSteadyStateGating=STG_hNa_inf, inactivationTimeConstant=STG_tau_hNa)
 
 # Building Kd current
-mKd_inf(V) = boltz(V, 12.3, -11.8)
-tau_mKd(V) = tauX(V, 7.2, 6.4, 28.3, -19.2)
-KdCurrent = initializeCurrent("Kd", VK, exponents=4,
-    activationSteadyStateGating=mKd_inf, activationTimeConstant=tau_mKd)
+STG_KdCurrent = initializeCurrent("Kd", STG_VK, exponents=4,
+    activationSteadyStateGating=STG_mKd_inf, activationTimeConstant=STG_tau_mKd)
 
 # Building KCa current
-mKCa_inf(V, Ca) = (Ca / (Ca+3)) * (1 / (1+exp((V+28.3)/-12.6)))
-tau_mKCa(V) = tauX(V, 90.3, 75.1, 46., -22.7)
-KCaCurrent = initializeCurrent("KCa", VK, exponents=4,
-    activationSteadyStateGating=mKCa_inf, activationTimeConstant=tau_mKCa,
+STG_KCaCurrent = initializeCurrent("KCa", STG_VK, exponents=4,
+    activationSteadyStateGating=STG_mKCa_inf, activationTimeConstant=STG_tau_mKCa,
+    calciumDependency=true)
+STG_KCaCurrent2 = initializeCurrent("KCa", STG_VK, numberOfGatings=2, exponents=[3, 1],
+    activationSteadyStateGating=STG_mKCa_inf, activationTimeConstant=STG_tau_mKCa,
+    inactivationSteadyStateGating=STG_mKCa_inf, inactivationTimeConstant=STG_tau_mKCa,
     calciumDependency=true)
 
 # Building CaT current
-mCaT_inf(V) = boltz(V, 27.1, -7.2)
-tau_mCaT(V) = tauX(V, 21.7, 21.3, 68.1, -20.5)
-hCaT_inf(V) = boltz(V, 32.1, 5.5)
-tau_hCaT(V) = tauX(V, 105., 89.8, 55., -16.9)
-CaTCurrent = initializeCurrent("CaT", VCa, numberOfGatings=2, exponents=[3, 1],
-    activationSteadyStateGating=mCaT_inf, activationTimeConstant=tau_mCaT,
-    inactivationSteadyStateGating=hCaT_inf, inactivationTimeConstant=tau_hCaT)
+STG_CaTCurrent = initializeCurrent("CaT", STG_VCa, numberOfGatings=2, exponents=[3, 1],
+    activationSteadyStateGating=STG_mCaT_inf, activationTimeConstant=STG_tau_mCaT,
+    inactivationSteadyStateGating=STG_hCaT_inf, inactivationTimeConstant=STG_tau_hCaT)
 
 # Building CaS current
-mCaS_inf(V) = boltz(V, 33., -8.1)
-tau_mCaS(V) = 1.4 + (7 / ((exp((V+27)/10)) + (exp((V+70)/-13))))
-hCaS_inf(V) = boltz(V, 60., 6.2)
-tau_hCaS(V) = 60 + (150 / ((exp((V+55)/9)) + (exp((V+65)/-16))))
-CaSCurrent = initializeCurrent("CaS", VCa, numberOfGatings=2, exponents=[3, 1],
-    activationSteadyStateGating=mCaS_inf, activationTimeConstant=tau_mCaS,
-    inactivationSteadyStateGating=hCaS_inf, inactivationTimeConstant=tau_hCaS)
+STG_CaSCurrent = initializeCurrent("CaS", STG_VCa, numberOfGatings=2, exponents=[3, 1],
+    activationSteadyStateGating=STG_mCaS_inf, activationTimeConstant=STG_tau_mCaS,
+    inactivationSteadyStateGating=STG_hCaS_inf, inactivationTimeConstant=STG_tau_hCaS)
 
 # Building A current
-mA_inf(V) = boltz(V, 27.2, -8.7)
-tau_mA(V) = tauX(V, 11.6, 10.4, 32.9, -15.2)
-hA_inf(V) = boltz(V, 56.9, 4.9)
-tau_hA(V) = tauX(V, 38.6, 29.2, 38.9, -26.5)
-ACurrent = initializeCurrent("A", VK, numberOfGatings=2, exponents=[3, 1],
-    activationSteadyStateGating=mA_inf, activationTimeConstant=tau_mA,
-    inactivationSteadyStateGating=hA_inf, inactivationTimeConstant=tau_hA)
+STG_ACurrent = initializeCurrent("A", STG_VK, numberOfGatings=2, exponents=[3, 1],
+    activationSteadyStateGating=STG_mA_inf, activationTimeConstant=STG_tau_mA,
+    inactivationSteadyStateGating=STG_hA_inf, inactivationTimeConstant=STG_tau_hA)
 
 # Building H current
-mH_inf(V) = boltz(V, 70., 6.)
-tau_mH(V) = tauX(V, 272., -1499., 42.2, -8.73)
-HCurrent = initializeCurrent("H", VH, exponents=1,
-    activationSteadyStateGating=mH_inf, activationTimeConstant=tau_mH)
+STG_HCurrent = initializeCurrent("H", STG_VH, exponents=1,
+    activationSteadyStateGating=STG_mH_inf, activationTimeConstant=STG_tau_mH)
 
 # Building calcium dynamics
 CaDyn = initializeCalciumDynamics(["CaT", "CaS"], [-0.94, -0.94], 0.05, 20)
+SimpleCaDyn = initializeCalciumDynamics("CaT", -0.94, 0.05, 20)
 
 # Building a more complex model with calcium
-ionCurrents = [NaCurrent, CaTCurrent, CaSCurrent, ACurrent, KCaCurrent, KdCurrent, HCurrent]
-gvec = [800., 3., 3., 80., 60., 90., 0.1]
-STG = initializeNeuronModel(ionCurrents, calciumDynamics=CaDyn, leakageConductance=0.01, reversaleLeakagePotential=Vleak, maximumConductances=gvec)
+STG_ionCurrents = [STG_NaCurrent, STG_CaTCurrent, STG_CaSCurrent, STG_ACurrent, STG_KCaCurrent, STG_KdCurrent, STG_HCurrent]
+STG_ionCurrents2 = [STG_NaCurrent, STG_CaTCurrent, STG_CaSCurrent, STG_ACurrent, STG_KCaCurrent2, STG_KdCurrent, STG_HCurrent]
+STG_gvec = [800., 3., 3., 80., 60., 90., 0.1]
+STG = initializeNeuronModel(STG_ionCurrents, C=0.1, calciumDynamics=CaDyn, leakageConductance=0.01, reversaleLeakagePotential=STG_Vleak, maximumConductances=STG_gvec)
+SimpleSTG = initializeNeuronModel(STG_ionCurrents2, calciumDynamics=SimpleCaDyn, maximumConductances=STG_gvec)
+
+### DA model
+# Building Na current
+DA_NaCurrent = initializeCurrent("Na", DA_VNa, numberOfGatings=2, exponents=[3, 1],
+    activationSteadyStateGating=DA_mNa_inf, activationTimeConstant=DA_tau_mNa,
+    inactivationSteadyStateGating=DA_hNa_inf, inactivationTimeConstant=DA_tau_hNa)
+
+# Building Kd current
+DA_KdCurrent = initializeCurrent("Kd", DA_VK, exponents=3,
+    activationSteadyStateGating=DA_mKd_inf, activationTimeConstant=DA_tau_mKd)
+
+# Building CaL current
+DA_CaLCurrent = initializeCurrent("CaL", DA_VCa, exponents=2,
+    activationSteadyStateGating=DA_mCaL_inf, activationTimeConstant=DA_tau_mCaL)
+
+# Building CaN current
+DA_CaSCurrent = initializeCurrent("CaN", DA_VCa, exponents=1,
+    activationSteadyStateGating=DA_mCaN_inf, activationTimeConstant=DA_tau_mCaN)
+
+# Building ERG current
+DA_ERGCurrent = initializeCurrent("ERG", DA_VK, exponents=1,
+    activationSteadyStateGating=DA_o_inf, activationTimeConstant=DA_tau_o)
+
+# Building NMDA current
+DA_NMDACurrent = initializeCurrent("NMDA", DA_VNMDA, exponents=1,
+    activationSteadyStateGating=DA_NMDA_inf, activationTimeConstant=DA_tau_NMDA,
+    MgDependency=true)
+DA_NMDACurrent2 = initializeCurrent("NMDA", DA_VNMDA, numberOfGatings=2, exponents=[1, 1],
+    activationSteadyStateGating=DA_NMDA_inf, activationTimeConstant=DA_tau_NMDA,
+    inactivationSteadyStateGating=DA_NMDA_inf, inactivationTimeConstant=DA_tau_NMDA,
+    MgDependency=true)
+
+# Building a more complex model with calcium
+DA_ionCurrents = [DA_NaCurrent, DA_KdCurrent, DA_CaLCurrent, DA_CaSCurrent, DA_ERGCurrent, DA_NMDACurrent]
+DA_ionCurrents2 = [DA_NaCurrent, DA_KdCurrent, DA_CaLCurrent, DA_CaSCurrent, DA_ERGCurrent, DA_NMDACurrent2]
+DA = initializeNeuronModel(DA_ionCurrents, C=1.)
+DA2 = initializeNeuronModel(DA_ionCurrents2, C=1.)
 
 # Writing uncontrolled and controlled simulation files
 writeUncontrolledODEs(STG)
@@ -78,6 +94,44 @@ if isfile("CBModelODEs.jl") && isfile("ControlledCBModelODEs.jl")
     rm("CBModelODEs.jl")
     rm("ControlledCBModelODEs.jl")
     flag = true
+end
+
+# Writing uncontrolled and controlled simulation files
+writeUncontrolledODEs(SimpleSTG)
+writeControlledODEs(SimpleSTG, ["CaS", "A"], ["f", "u"])
+
+# Computing return flag
+flag = false
+if isfile("CBModelODEs.jl") && isfile("ControlledCBModelODEs.jl")
+    rm("CBModelODEs.jl")
+    rm("ControlledCBModelODEs.jl")
+    flag = true
+end
+
+# Writing uncontrolled and controlled simulation files
+writeUncontrolledODEs(DA)
+writeControlledODEs(DA, ["CaN", "CaL"], ["s"])
+
+# Computing return flag
+if isfile("CBModelODEs.jl") && isfile("ControlledCBModelODEs.jl")
+    rm("CBModelODEs.jl")
+    rm("ControlledCBModelODEs.jl")
+    flag = true
+else
+    flag = false
+end
+
+# Writing uncontrolled and controlled simulation files
+writeUncontrolledODEs(DA2)
+writeControlledODEs(DA2, ["CaN", "CaL"], ["s"])
+
+# Computing return flag
+if isfile("CBModelODEs.jl") && isfile("ControlledCBModelODEs.jl")
+    rm("CBModelODEs.jl")
+    rm("ControlledCBModelODEs.jl")
+    flag = true
+else
+    flag = false
 end
 
 return flag
