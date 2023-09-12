@@ -98,10 +98,7 @@ struct NeuronCB
 end
 
 """
-    initializeCurrent(name::String, reversalPotential::Union{Int64, Float64}; numberOfGatings::Int64=1, exponents::Union{Int64, Vector{Int64}}=1,
-    activationSteadyStateGating::Union{Function, Float64}=0., activationTimeConstant::Union{Function, Float64, Int64}=NaN,
-    inactivationSteadyStateGating::Union{Function, Float64}=0., inactivationTimeConstant::Union{Function, Float64, Int64}=NaN,
-    calciumDependency::Bool=false, MgDependency::Bool=false)
+    initializeCurrent(name::String, reversalPotential::Union{Int64, Float64}; numberOfGatings::Int64=1, exponents::Union{Int64, Vector{Int64}}=1, activationSteadyStateGating::Union{Function, Float64}=0., activationTimeConstant::Union{Function, Float64, Int64}=NaN, inactivationSteadyStateGating::Union{Function, Float64}=0., inactivationTimeConstant::Union{Function, Float64, Int64}=NaN, calciumDependency::Bool=false, MgDependency::Bool=false)
 
 Initialize an ionic current data structure. The current must be of type Iion = bar_gion * m^a1 * h^a2 * (V - Eion).
 
