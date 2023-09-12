@@ -1,4 +1,19 @@
-# Function that writes conductance-based model ODE equations in a jl files
+"""
+    writeUncontrolledODEs(neuron::NeuronCB; 
+        filename::String="CBModelODEs.jl")
+
+Write a julia file that contains all ODEs for a specific conductance based model. The equations can be integrated using the DifferentialEquations.jl package.
+Returns nothing.
+
+# Arguments
+- `neuron`: data structure containing the conductance based model of interest.
+- `filename`: name of the julia file that will contain the equations. Optional.
+
+# Example
+```jldoctest
+julia> writeUncontrolledODEs(STG)
+```
+"""
 function writeUncontrolledODEs(neuron::NeuronCB; filename::String="CBModelODEs.jl")
     # If filename last 3 carachters are not ".jl", throw error
     if filename[end-2:end] ≠ ".jl"
@@ -211,7 +226,26 @@ function writeUncontrolledODEs(neuron::NeuronCB; filename::String="CBModelODEs.j
     close(f)
 end
 
-# Function that writes controlled conductance-based model ODE equations in a jl files
+"""
+    writeControlledODEs(neuron::NeuronCB, 
+        controlledConductances::Vector{String}, 
+        controlledDICs::Vector{String}; 
+        filename::String="ControlledCBModelODEs.jl")
+
+Write a julia file that contains all ODEs for a specific conductance based model that is coupled with a neuromodulation controller. The equations can be integrated using the DifferentialEquations.jl package.
+Refer to Fyon et al., 2023 "Reliable neuromodulation from adaptive control of ion channel expression". Returns nothing.
+
+# Arguments
+- `neuron`: data structure containing the conductance based model of interest.
+- `controlledConductances`: vector of strings that contains the names of the conductances the controller outputs.
+- `controlledDICs`: vector of strings that contains the names of the DICs the controller gets in input.
+- `filename`: name of the julia file that will contain the equations. Optional.
+
+# Example
+```jldoctest
+julia> writeControlledODEs(STG, ["CaS", "A"], ["s", "u"])
+```
+"""
 function writeControlledODEs(neuron::NeuronCB, controlledConductances::Vector{String}, controlledDICs::Vector{String}; filename::String="ControlledCBModelODEs.jl")
     # If there are more DICs controlled than modulated conductances, throw error
     if length(controlledDICs) > length(controlledConductances)

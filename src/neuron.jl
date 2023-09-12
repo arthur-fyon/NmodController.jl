@@ -117,14 +117,14 @@ Note that the maximum ion channel conductance bar_gion is not contained in the i
 # Arguments
 - `name`: name of the ionic current.
 - `reversalPotential`: reversal Nernst potential of the ion, Eion.
-- `numberOfGatings`: number of gating variable(s) of the ionic current.
-- `exponents`: exponent(s) of the gating variable(s), a1 (and a2).
-- `activationSteadyStateGating`: equilibrium function of the activation gating variable.
-- `activationTimeConstant`: time constant function/constant of the activation gating variable.
-- `inactivationSteadyStateGating`: equilibrium function of the inactivation gating variable.
-- `inactivationTimeConstant`: time constant function/constant of the inactivation gating variable.
-- `calciumDependency`: flag indicating if the ionic current depends on calcium.
-- `MgDependency`: flag indicating if the ionic current depends on magnesium.
+- `numberOfGatings`: number of gating variable(s) of the ionic current. Optional.
+- `exponents`: exponent(s) of the gating variable(s), a1 (and a2). Optional.
+- `activationSteadyStateGating`: equilibrium function of the activation gating variable. Optional.
+- `activationTimeConstant`: time constant function/constant of the activation gating variable. Optional.
+- `inactivationSteadyStateGating`: equilibrium function of the inactivation gating variable. Optional.
+- `inactivationTimeConstant`: time constant function/constant of the inactivation gating variable. Optional.
+- `calciumDependency`: flag indicating if the ionic current depends on calcium. Optional.
+- `MgDependency`: flag indicating if the ionic current depends on magnesium. Optional.
 
 # Example
 ```jldoctest
@@ -251,11 +251,11 @@ Initialize a conductance based model data structure. The leakage current must be
 
 # Arguments
 - `ionCurrents`: vector of previously defined active ion current data structures contained in the model.
-- `C`: membrane capacitance.
-- `leakageConductance`: conductance of the leakage current, gleak.
-- `reversaleLeakagePotential`: reversal Nernst potential of the leakage current, Eleak.
-- `calciumDynamics`: data structure defining intracellular calcium dynamics.
-- `maximumConductances`: vector of maximum ion channel conductances of currents contained in `ionCurrents`.
+- `C`: membrane capacitance. Optional.
+- `leakageConductance`: conductance of the leakage current, gleak. Optional.
+- `reversaleLeakagePotential`: reversal Nernst potential of the leakage current, Eleak. Optional.
+- `calciumDynamics`: data structure defining intracellular calcium dynamics. Optional.
+- `maximumConductances`: vector of maximum ion channel conductances of currents contained in `ionCurrents`. Optional.
 
 # Example
 ```jldoctest

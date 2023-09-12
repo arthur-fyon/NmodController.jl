@@ -3,7 +3,7 @@
 STG_boltz(V, A, B) = 1 / (1 + exp((V+A) / B))
 tauX(V, A, B, D, E) = A - B / (1 + exp((V+D) / E))
 
-# Initializing Nernst reversalPotential
+# Initializing Nernst reversal potentials
 STG_VNa = 50. # Sodium reversal potential
 STG_VK = -80. # Potassium reversal potential
 STG_VCa = 80. # Calcium reversal potential
