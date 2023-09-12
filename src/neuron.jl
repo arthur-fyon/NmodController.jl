@@ -131,6 +131,7 @@ Note that the maximum ion channel conductance bar_gion is not contained in the i
 julia> NaCurrent = initializeCurrent("Na", VNa, numberOfGatings=2, exponents=[3, 1],
     activationSteadyStateGating=mNa_inf, activationTimeConstant=tau_mNa,
     inactivationSteadyStateGating=hNa_inf, inactivationTimeConstant=tau_hNa)
+    
 IonCurrent("Na", 2, [3, 1], Function[mNa_inf, hNa_inf], Function[tau_mNa, tau_hNa], 50.0, false, false)
 ```
 """
@@ -209,6 +210,7 @@ Initialize an intracellular calcium dynamics data structure. The ODE describing 
 # Example
 ```jldoctest
 julia> CaDynamics = initializeCalciumDynamics(["CaT", "CaS"], [-0.94, -0.94], 0.05, 20)
+
 CalciumDynamic(2, ["CaT", "CaS"], [-0.94, -0.94], 0.05, 20.0)
 ```
 """
@@ -259,6 +261,7 @@ Initialize a conductance based model data structure. The leakage current must be
 ```jldoctest
 julia> STG = initializeNeuronModel(STG_ionCurrents, C=0.1, calciumDynamics=CaDyn, 
     leakageConductance=0.01, reversaleLeakagePotential=STG_Vleak, maximumConductances=STG_gvec)
+
 NeuronCB(0.1, 7, IonCurrent[IonCurrent("Na", 2, [3, 1], Function[STG_mNa_inf, STG_hNa_inf], Function[STG_tau_mNa, STG_tau_hNa], 50.0, false, false), 
 IonCurrent("CaT", 2, [3, 1], Function[STG_mCaT_inf, STG_hCaT_inf], Function[STG_tau_mCaT, STG_tau_hCaT], 80.0, false, false), 
 IonCurrent("CaS", 2, [3, 1], Function[STG_mCaS_inf, STG_hCaS_inf], Function[STG_tau_mCaS, STG_tau_hCaS], 80.0, false, false), 
