@@ -1,5 +1,4 @@
-# Initializing a conductance based model
-## Initializing an ionic current
+# Initializing an ionic current
 
 In conductance based models, an ionic current $I_\mathrm{ion}$ is described by its voltage dependent conductance $g_\mathrm{ion}$ and Nernst reversal potential $E_\mathrm{ion}$
 
