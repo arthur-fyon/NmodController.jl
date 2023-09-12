@@ -99,22 +99,23 @@ end
 
 """
     initializeCurrent(name::String, 
-    reversalPotential::Union{Int64, Float64}; 
-    numberOfGatings::Int64=1, 
-    exponents::Union{Int64, Vector{Int64}}=1, 
-    activationSteadyStateGating::Union{Function, Float64}=0., 
-    activationTimeConstant::Union{Function, Float64, Int64}=NaN, 
-    inactivationSteadyStateGating::Union{Function, Float64}=0., 
-    inactivationTimeConstant::Union{Function, Float64, Int64}=NaN, 
-    calciumDependency::Bool=false, 
-    MgDependency::Bool=false)
+        reversalPotential::Union{Int64, Float64}; 
+        numberOfGatings::Int64=1, 
+        exponents::Union{Int64, Vector{Int64}}=1, 
+        activationSteadyStateGating::Union{Function, Float64}=0., 
+        activationTimeConstant::Union{Function, Float64, Int64}=NaN, 
+        inactivationSteadyStateGating::Union{Function, Float64}=0., 
+        inactivationTimeConstant::Union{Function, Float64, Int64}=NaN, 
+        calciumDependency::Bool=false, 
+        MgDependency::Bool=false)
 
-Initialize an ionic current data structure. The current must be of type Iion = bar_gion * m^a1 * h^a2 * (V - Eion).
+Initialize an ionic current data structure. The current must be of type: Iion = bar_gion * m^a1 * h^a2 * (V - Eion).
+The ODE describing gating variable dynamics must be of type: tau_m(V) * dm/dt = m_inf(V, [Ca, Mg]) - m.
 
 Note that the maximum ion channel conductance bar_gion is not contained in the ionic current data structure but in the neuronal model one.
 
 # Arguments
-- `name::String`: name of the ionic current.
+- `name`: name of the ionic current.
 - `reversalPotential`: reversal Nernst potential of the ion, Eion.
 - `numberOfGatings`: number of gating variable(s) of the ionic current.
 - `exponents`: exponent(s) of the gating variable(s), a1 (and a2).
@@ -124,7 +125,6 @@ Note that the maximum ion channel conductance bar_gion is not contained in the i
 - `inactivationTimeConstant`: time constant function/constant of the inactivation gating variable.
 - `calciumDependency`: flag indicating if the ionic current depends on calcium.
 - `MgDependency`: flag indicating if the ionic current depends on magnesium.
-
 
 # Example
 ```jldoctest
@@ -192,7 +192,26 @@ function initializeCurrent(name::String, reversalPotential::Union{Int64, Float64
     end
 end
 
-# Function that initializes calcium dynamics
+"""
+    initializeCalciumDynamics(currentNames::Union{String, Vector{String}}, 
+        coefficients::Union{Int64, Float64, Vector{Int64}, Vector{Float64}},
+        nernstEquilibriumValue::Union{Int64, Float64}, 
+        timeConstant::Union{Int64, Float64})
+
+Initialize an intracellular calcium dynamics data structure. The ODE describing intracellular calcium dynamics must be of type: tau_Ca * dCa/dt = (e1 * Iion_1 + ... + en * Iion_n - Ca + CaEquilibrium).
+
+# Arguments
+- `currentNames`: names of the calcium ionic current Iion_i.
+- `coefficients`: coefficient(s) of the ionic currents, ei.
+- `nernstEquilibriumValue`: Equilibrium value of the intracellular calcium with null current, CaEquilibrium.
+- `timeConstant`: time constant of the intracellular calcium dynamics, tau_Ca.
+
+# Example
+```jldoctest
+julia> CaDynamics = initializeCalciumDynamics(["CaT", "CaS"], [-0.94, -0.94], 0.05, 20)
+CalciumDynamic(2, ["CaT", "CaS"], [-0.94, -0.94], 0.05, 20.0)
+```
+"""
 function initializeCalciumDynamics(currentNames::Union{String, Vector{String}}, coefficients::Union{Int64, Float64, Vector{Int64}, Vector{Float64}},
     nernstEquilibriumValue::Union{Int64, Float64}, timeConstant::Union{Int64, Float64})
 
@@ -218,7 +237,38 @@ function initializeCalciumDynamics(currentNames::Union{String, Vector{String}}, 
     end
 end
 
-# Function that initializes neuronal model
+"""
+    initializeNeuronModel(ionCurrents::Union{IonCurrent, Vector{IonCurrent}}; 
+        C::Float64=1., 
+        leakageConductance::Union{Float64, Int64}=1., 
+        reversaleLeakagePotential::Union{Float64, Int64}=-50., 
+        calciumDynamics::Union{CalciumDynamic, Bool}=false, 
+        maximumConductances::Union{Vector{Int64}, Int64, Vector{Float64}, Float64}=0.)
+
+Initialize a conductance based model data structure. The leakage current must be of type: Ileak = gleak * (V - Eleak).
+
+# Arguments
+- `ionCurrents`: vector of previously defined active ion current data structures contained in the model.
+- `C`: membrane capacitance.
+- `leakageConductance`: conductance of the leakage current, gleak.
+- `reversaleLeakagePotential`: reversal Nernst potential of the leakage current, Eleak.
+- `calciumDynamics`: data structure defining intracellular calcium dynamics.
+- `maximumConductances`: vector of maximum ion channel conductances of currents contained in `ionCurrents`.
+
+# Example
+```jldoctest
+julia> STG = initializeNeuronModel(STG_ionCurrents, C=0.1, calciumDynamics=CaDyn, 
+    leakageConductance=0.01, reversaleLeakagePotential=STG_Vleak, maximumConductances=STG_gvec)
+NeuronCB(0.1, 7, IonCurrent[IonCurrent("Na", 2, [3, 1], Function[STG_mNa_inf, STG_hNa_inf], Function[STG_tau_mNa, STG_tau_hNa], 50.0, false, false), 
+IonCurrent("CaT", 2, [3, 1], Function[STG_mCaT_inf, STG_hCaT_inf], Function[STG_tau_mCaT, STG_tau_hCaT], 80.0, false, false), 
+IonCurrent("CaS", 2, [3, 1], Function[STG_mCaS_inf, STG_hCaS_inf], Function[STG_tau_mCaS, STG_tau_hCaS], 80.0, false, false), 
+IonCurrent("A", 2, [3, 1], Function[STG_mA_inf, STG_hA_inf], Function[STG_tau_mA, STG_tau_hA], -80.0, false, false), 
+IonCurrent("KCa", 1, [4], Function[STG_mKCa_inf], Function[STG_tau_mKCa], -80.0, true, false), 
+IonCurrent("Kd", 1, [4], Function[STG_mKd_inf], Function[STG_tau_mKd], -80.0, false, false), 
+IonCurrent("H", 1, [1], Function[STG_mH_inf], Function[STG_tau_mH], -20.0, false, false)], 
+[800.0, 3.0, 3.0, 80.0, 60.0, 90.0, 0.1], 0.01, -50.0, CalciumDynamic(2, ["CaT", "CaS"], [-0.94, -0.94], 0.05, 20.0), true, false)
+```
+"""
 function initializeNeuronModel(ionCurrents::Union{IonCurrent, Vector{IonCurrent}}; C::Float64=1., leakageConductance::Union{Float64, Int64}=1., 
     reversaleLeakagePotential::Union{Float64, Int64}=-50., calciumDynamics::Union{CalciumDynamic, Bool}=false, 
     maximumConductances::Union{Vector{Int64}, Int64, Vector{Float64}, Float64}=0.)
