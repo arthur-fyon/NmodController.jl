@@ -97,7 +97,37 @@ struct NeuronCB
     globalMgDependency::Bool
 end
 
-# Function that initializes a certain type of current
+"""
+    initializeCurrent(name::String, reversalPotential::Union{Int64, Float64}; numberOfGatings::Int64=1, exponents::Union{Int64, Vector{Int64}}=1,
+    activationSteadyStateGating::Union{Function, Float64}=0., activationTimeConstant::Union{Function, Float64, Int64}=NaN,
+    inactivationSteadyStateGating::Union{Function, Float64}=0., inactivationTimeConstant::Union{Function, Float64, Int64}=NaN,
+    calciumDependency::Bool=false, MgDependency::Bool=false)
+
+Initialize an ionic current data structure. The current must be of type Iion = bar_gion * m^a1 * h^a2 * (V - Eion).
+
+Note that the maximum ion channel conductance bar_gion is not contained in the ionic current data structure but in the neuronal model one.
+
+# Arguments
+- `name::String`: name of the ionic current.
+- `reversalPotential`: reversal Nernst potential of the ion, Eion.
+- `numberOfGatings`: number of gating variable(s) of the ionic current.
+- `exponents`: exponent(s) of the gating variable(s), a1 (and a2).
+- `activationSteadyStateGating`: equilibrium function of the activation gating variable.
+- `activationTimeConstant`: time constant function/constant of the activation gating variable.
+- `inactivationSteadyStateGating`: equilibrium function of the inactivation gating variable.
+- `inactivationTimeConstant`: time constant function/constant of the inactivation gating variable.
+- `calciumDependency`: flag indicating if the ionic current depends on calcium.
+- `MgDependency`: flag indicating if the ionic current depends on magnesium.
+
+
+# Example
+```jldoctest
+julia> NaCurrent = initializeCurrent("Na", VNa, numberOfGatings=2, exponents=[3, 1],
+    activationSteadyStateGating=mNa_inf, activationTimeConstant=tau_mNa,
+    inactivationSteadyStateGating=hNa_inf, inactivationTimeConstant=tau_hNa)
+IonCurrent("Na", 2, [3, 1], Function[mNa_inf, hNa_inf], Function[tau_mNa, tau_hNa], 50.0, false, false)
+```
+"""
 function initializeCurrent(name::String, reversalPotential::Union{Int64, Float64}; numberOfGatings::Int64=1, exponents::Union{Int64, Vector{Int64}}=1,
     activationSteadyStateGating::Union{Function, Float64}=0., activationTimeConstant::Union{Function, Float64, Int64}=NaN,
     inactivationSteadyStateGating::Union{Function, Float64}=0., inactivationTimeConstant::Union{Function, Float64, Int64}=NaN,
