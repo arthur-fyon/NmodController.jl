@@ -23,6 +23,7 @@ C \dot V = &-& \bar{g}_\mathrm{Na}m^3_\mathrm{Na}h_\mathrm{Na}(V-E_\mathrm{Na}) 
            &-& \bar{g}_\mathrm{Kd}m^4_\mathrm{Kd}(V-E_\mathrm{K}) \\ 
            &-& \bar{g}_\mathrm{H}m_\mathrm{H}(V-E_\mathrm{H}) \\ 
            &-& g_\mathrm{leak}(V-E_\mathrm{leak}) \\
+           &+& I_{ext}(t)
 \end{eqnarray}
 
 and the intracellular calcium dynamic writes
