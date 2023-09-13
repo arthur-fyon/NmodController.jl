@@ -72,7 +72,7 @@ KCaCurrent = initializeCurrent("KCa", EK, exponents=4,
 
 ### Example 3
 
-Another specific case is where the time constant may not depend on the voltage. In such case, just provide the time constant as a `Float64` or a `Int64` in argument of `initializeCurrent()`. Moreover, the converging value of the gating variable may be only magnesium dependent. In such case, do as the following. The next few lines of code show how to initialize an instantaneous magnesium dependent NMDA current with one gating variable. This current writes
+Another specific case is where the time constant may not depend on the voltage. In such case, just provide the time constant as a `Float64` or a `Int64` in argument of `initializeCurrent()`. Moreover, the converging value of the gating variable may be magnesium dependent. In such case, do as the following. The next few lines of code show how to initialize an instantaneous magnesium dependent NMDA current with one gating variable. This current writes
 
 $I_\mathrm{NMDA} = \bar{g}_\mathrm{NMDA} \cdot m_\mathrm{NMDA} \cdot (V - E_\mathrm{NMDA}).$
 
