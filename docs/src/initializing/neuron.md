@@ -67,9 +67,7 @@ gleak = 0.01
 # Initializing all the maximum ion channel conductances
 bar_g = [100., 10., 10., 1., 1.]
 
-# Initialize the current dynamic data structure
-CaDyn = initializeCalciumDynamics(["CaT", "CaS"], [-0.94, -0.94], 0.05, 20)
-
 using NmodController
+CaDyn = initializeCalciumDynamics(["CaT", "CaS"], [-0.94, -0.94], 0.05, 20)
 CBmodel = initializeNeuronModel(ionCurrents, C=0.1, calciumDynamics=CaDyn, leakageConductance=gleak, reversaleLeakagePotential=Eleak, maximumConductances=bar_g)
 ```
