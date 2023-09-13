@@ -1,4 +1,5 @@
 # Initializing a conductance based model
+## Classical conductance based model without intracellular calcium dynamic
 
 Once all the ionic current data structures have been initialized, any complete conductance based model can be descrbied. The voltage equation for such model, without any external applied current, writes
 
