@@ -39,7 +39,7 @@ Note that the argument `maximumConductances` is optional and correspond to all t
 
 When at least one ionic current is calcium dependent, an additional ODE has to be added to the conductance based model to describe intracellular calcium dynamics. Such equation generally writes
 
-$\tau_{Ca} \cdot \dot{\[Ca\]} = \sum_{\mathrm{ion}\,Ca} e_{\mathrm{ion}\,Ca} I_{\mathrm{ion}\,Ca} - \[Ca\] + Ca_\mathrm{eq}$
+$\tau_{Ca} \cdot \dot{[Ca]} = \sum_{\mathrm{ion}\,Ca} e_{\mathrm{ion}\,Ca} I_{\mathrm{ion}\,Ca} - [Ca] + Ca_\mathrm{eq}$
 
 where $I_{\mathrm{ion}\,Ca}$ is a calcium current of the model and $e_{\mathrm{ion}\,Ca}$ is its associated coefficient.
 
@@ -52,9 +52,9 @@ $\dot{V} = (1/C) \cdot (-I_\mathrm{Na} -  I_\mathrm{Kd} -  I_\mathrm{KCa} -  I_\
 
 The associated calcium dynamic writes
 
-$\tau_{Ca} \cdot \dot{\[Ca\]} = -0.94\cdot  I_{CaT} -0.94\cdot  I_{CaS} - \[Ca\] + Ca_\mathrm{eq}$
+$\tau_\mathrm{Ca} \cdot \dot{[Ca]} = -0.94\cdot  I_\mathrm{CaT} -0.94\cdot  I_\mathrm{CaS} - [Ca] + Ca_\mathrm{eq}$
 
-with $\tau_{Ca} = 20$ and $Ca_\mathrm{eq} = 0.05$.
+with $\tau_\mathrm{Ca} = 20$ and $Ca_\mathrm{eq} = 0.05$.
 
 ```julia
 # First wrapping all ionic currents in a vector
