@@ -15,17 +15,15 @@ The STG model is composed of 7 voltage gated ionic currents which one is calcium
 The voltage equation writes
 
 $
-\begin{eqnarray}
-C \dot V = &-& \bar{g}_\mathrm{Na}m^3_\mathrm{Na}h_\mathrm{Na}(V-E_\mathrm{Na}) \\ 
-           &-& \bar{g}_\mathrm{CaT}m^3_\mathrm{CaT}h_\mathrm{CaT}(V-E_\mathrm{Ca}) \\ 
-           &-& \bar{g}_\mathrm{CaS}m^3_\mathrm{CaS}h_\mathrm{CaS}(V-E_\mathrm{Ca}) \\ 
-           &-& \bar{g}_\mathrm{A}m^3_\mathrm{A}h_\mathrm{A}(V-E_\mathrm{K}) \\ 
-           &-& \bar{g}_\mathrm{KCa}m^4_\mathrm{KCa}(V-E_\mathrm{K}) \\ 
-           &-& \bar{g}_\mathrm{Kd}m^4_\mathrm{Kd}(V-E_\mathrm{K}) \\ 
-           &-& \bar{g}_\mathrm{H}m_\mathrm{H}(V-E_\mathrm{H}) \\ 
-           &-& g_\mathrm{leak}(V-E_\mathrm{leak}) \\
-           &+& I_{ext}(t)
-\end{eqnarray}
+C \dot V = - \bar{g}_\mathrm{Na}m^3_\mathrm{Na}h_\mathrm{Na}(V-E_\mathrm{Na}) \\ 
+           - \bar{g}_\mathrm{CaT}m^3_\mathrm{CaT}h_\mathrm{CaT}(V-E_\mathrm{Ca}) \\ 
+           - \bar{g}_\mathrm{CaS}m^3_\mathrm{CaS}h_\mathrm{CaS}(V-E_\mathrm{Ca}) \\ 
+           - \bar{g}_\mathrm{A}m^3_\mathrm{A}h_\mathrm{A}(V-E_\mathrm{K}) \\ 
+           - \bar{g}_\mathrm{KCa}m^4_\mathrm{KCa}(V-E_\mathrm{K}) \\ 
+           - \bar{g}_\mathrm{Kd}m^4_\mathrm{Kd}(V-E_\mathrm{K}) \\ 
+           - \bar{g}_\mathrm{H}m_\mathrm{H}(V-E_\mathrm{H}) \\ 
+           - g_\mathrm{leak}(V-E_\mathrm{leak}) \\
+           + I_{ext}(t)
 $
 
 and the intracellular calcium dynamic writes
@@ -33,3 +31,5 @@ and the intracellular calcium dynamic writes
 $\tau_{Ca} \cdot \dot{\[Ca\]} = -0.94\cdot  I_{CaT} -0.94\cdot  I_{CaS} - \[Ca\] + Ca_\mathrm{eq}$
 
 with $\tau_{Ca} = 20$ and $Ca_\mathrm{eq} = 0.05$.
+
+The next few lines of code show how to initialize such model using *NmodController.jl*.
