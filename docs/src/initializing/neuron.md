@@ -39,7 +39,7 @@ Note that the argument `maximumConductances` is optional and correspond to all t
 
 When at least one ionic current is calcium dependent, an additional ODE has to be added to the conductance based model to describe intracellular calcium dynamics. Such equation generally writes
 
-$\tau_{Ca} \cdot \dot{[Ca]} = \sum_{\mathrm{ion}\,Ca} e_{\mathrm{ion}\,Ca} I_{\mathrm{ion}\,Ca} - [Ca] + Ca_\mathrm{eq}$
+$\tau_\mathrm{Ca} \cdot \dot{[Ca]} = \sum_{\mathrm{ion}\,Ca} e_{\mathrm{ion}\,Ca} I_{\mathrm{ion}\,Ca} - [Ca] + Ca_\mathrm{eq}$
 
 where $I_{\mathrm{ion}\,Ca}$ is a calcium current of the model and $e_{\mathrm{ion}\,Ca}$ is its associated coefficient.
 
@@ -71,5 +71,5 @@ bar_g = [100., 10., 10., 1., 1.]
 CaDyn = initializeCalciumDynamics(["CaT", "CaS"], [-0.94, -0.94], 0.05, 20)
 
 using NmodController
-HHmodel = initializeNeuronModel(ionCurrents, C=0.1, calciumDynamics=CaDyn, leakageConductance=gleak, reversaleLeakagePotential=Eleak, maximumConductances=bar_g)
+CBmodel = initializeNeuronModel(ionCurrents, C=0.1, calciumDynamics=CaDyn, leakageConductance=gleak, reversaleLeakagePotential=Eleak, maximumConductances=bar_g)
 ```
