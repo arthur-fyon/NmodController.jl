@@ -14,6 +14,7 @@ The STG model is composed of 7 voltage gated ionic currents which one is calcium
 
 The voltage equation writes
 
+$
 \begin{eqnarray}
 C \dot V = &-& \bar{g}_\mathrm{Na}m^3_\mathrm{Na}h_\mathrm{Na}(V-E_\mathrm{Na}) \\ 
            &-& \bar{g}_\mathrm{CaT}m^3_\mathrm{CaT}h_\mathrm{CaT}(V-E_\mathrm{Ca}) \\ 
@@ -25,6 +26,7 @@ C \dot V = &-& \bar{g}_\mathrm{Na}m^3_\mathrm{Na}h_\mathrm{Na}(V-E_\mathrm{Na}) 
            &-& g_\mathrm{leak}(V-E_\mathrm{leak}) \\
            &+& I_{ext}(t)
 \end{eqnarray}
+$
 
 and the intracellular calcium dynamic writes
 
