@@ -22,7 +22,7 @@ The next few lines of code show how to initialize a sodium current with two gati
 
 $I_\mathrm{Na} = \bar{g}_\mathrm{Na} \cdot m^{3}_\mathrm{Na} \cdot h_\mathrm{Na} \cdot (V - E_\mathrm{Na}).$
 
-```@example
+```julia
 # First initializing the converging values and time constants functions
 boltz(V, A, B) = 1 / (1 + exp((V+A) / B))
 tauX(V, A, B, D, E) = A - B / (1 + exp((V+D) / E))
