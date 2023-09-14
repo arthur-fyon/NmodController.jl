@@ -73,7 +73,7 @@ function writeUncontrolledODEs(neuron::NeuronCB; filename::String="CBModelODEs.j
     # Writing variables naming
     line = "# Variables\n\t"
     write(f, line)
-    line = "V = x[1](t)\n\t"
+    line = "V = x[1] # Membrane voltage\n\t"
     write(f, line)
 
     # Looping over all model currents
@@ -366,7 +366,7 @@ function writeControlledODEs(neuron::NeuronCB, controlledConductances::Vector{St
     # Writing variables naming
     line = "# Variables\n\t"
     write(f, line)
-    line = "V = x[1](t)\n\t"
+    line = "V = x[1] # Membrane voltage\n\t"
     write(f, line)
 
     # Looping over all model currents
