@@ -2,24 +2,24 @@
 
 # Computing DICs and threshold voltage on the STG model
 Once the STG model is initialized, it is very straightforward to compute DICs, sensitivity matrix or threshold voltage. For comparison, two STG models with different maximum ion channel conductances will be used. `STG_spiking` that exhibits a tonic spiking behavior with
-- $\bar{g}_\mathrm{Na} = 4000$;
-- $\bar{g}_\mathrm{CaT} = 3$;
-- $\bar{g}_\mathrm{CaS} = 4$;
-- $\bar{g}_\mathrm{A} = 175$;
-- $\bar{g}_\mathrm{KCa} = 110$;
-- $\bar{g}_\mathrm{Kd} = 137$;
-- $\bar{g}_\mathrm{H} = 0.3$;
-- $g_\mathrm{leak} = 0.01$;
+- $\bar{g}_\mathrm{Na} =$ 4000;
+- $\bar{g}_\mathrm{CaT} =$ 3;
+- $\bar{g}_\mathrm{CaS} =$ 4;
+- $\bar{g}_\mathrm{A} =$ 175;
+- $\bar{g}_\mathrm{KCa} =$ 110;
+- $\bar{g}_\mathrm{Kd} =$ 137;
+- $\bar{g}_\mathrm{H} =$ 0.3;
+- $g_\mathrm{leak} =$ 0.01;
 
 and `STG_bursting` that exhibits a bursting behavior with
-- $\bar{g}_\mathrm{Na} = 4000$;
-- $\bar{g}_\mathrm{CaT} = 3$;
-- $\bar{g}_\mathrm{CaS} = 19$;
-- $\bar{g}_\mathrm{A} = 70$;
-- $\bar{g}_\mathrm{KCa} = 110$;
-- $\bar{g}_\mathrm{Kd} = 137$;
-- $\bar{g}_\mathrm{H} = 0.3$;
-- $g_\mathrm{leak} = 0.01$.
+- $\bar{g}_\mathrm{Na} =$ 4000;
+- $\bar{g}_\mathrm{CaT} =$ 3;
+- $\bar{g}_\mathrm{CaS} =$ 19;
+- $\bar{g}_\mathrm{A} =$ 70;
+- $\bar{g}_\mathrm{KCa} =$ 110;
+- $\bar{g}_\mathrm{Kd} =$ 137;
+- $\bar{g}_\mathrm{H} =$ 0.3;
+- $g_\mathrm{leak} =$ 0.01.
 
 The next few lines of code show how to compute and plot DICs, sensitivity matrix and threshold voltage of the spiking STG model using *NmodController.jl*.
 
@@ -65,7 +65,7 @@ vline!([STG_Vth], linewidth=1.5, color=:firebrick1, linestyle=:dashdot)
 xlabel!(L"$V$")
 CC = plot(p1, p1zoom, p2, p2zoom, p3, p3zoom, layout=(3, 2), size=(900, 600), margins=10px, dpi=500)
 ```
-![](https://raw.githubusercontent.com/arthur-fyon/NmodController/main/docs/src/assets/NmodController_DICs_STGspiking.png)
+![](https://raw.githubusercontent.com/arthur-fyon/NmodController.jl/main/docs/src/assets/NmodController_DICs_STGspiking.png)
 
 The next few lines of code show how to compute and plot DICs, sensitivity matrix and threshold voltage of the bursting STG model using *NmodController.jl* for the sake of comparison.
 
@@ -104,4 +104,4 @@ vline!([STG_Vth], linewidth=1.5, color=:firebrick1, linestyle=:dashdot)
 xlabel!(L"$V$")
 CC = plot(p1, p1zoom, p2, p2zoom, p3, p3zoom, layout=(3, 2), size=(900, 600), margins=10px, dpi=500)
 ```
-![](https://raw.githubusercontent.com/arthur-fyon/NmodController/main/docs/src/assets/NmodController_DICs_STGbursting.png)
+![](https://raw.githubusercontent.com/arthur-fyon/NmodController.jl/main/docs/src/assets/NmodController_DICs_STGbursting.png)
