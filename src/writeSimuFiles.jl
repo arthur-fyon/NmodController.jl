@@ -41,7 +41,7 @@ function writeUncontrolledODEs(neuron::NeuronCB; filename::String="CBModelODEs.j
     # Writing the function prototype
     line = "# Function that outputs values of variables derivatives\n"
     write(f, line)
-    line = "function CB_ODE(dx, x, p, t)\n\t"
+    line = "function "*filename[1:end-3]*"(dx, x, p, t)\n\t"
     write(f, line)
 
     # Writing parameters naming
@@ -293,7 +293,7 @@ function writeControlledODEs(neuron::NeuronCB, controlledConductances::Vector{St
     # Writing the function prototype
     line = "# Function that outputs values of variables derivatives\n"
     write(f, line)
-    line = "function Controlled_CB_ODE(dx, x, p, t)\n\t"
+    line = "function "*filename[1:end-3]*"(dx, x, p, t)\n\t"
     write(f, line)
 
     # Writing parameters naming
@@ -647,7 +647,7 @@ function writeControlledODEs(neuron::NeuronCB, controlledConductances::Vector{St
         end
     end
 
-    line = "gDICr = gDICr - SVth[timescales, unmodulated] * p[2:"*string(length(neuron.ionCurrents)-length(controlledConductances)+1)*"]\n\t"
+    line = "gDICr = gDICr - SVth[timescales, unmodulated] * collect(p[2:"*string(length(neuron.ionCurrents)-length(controlledConductances)+1)*"])\n\t"
     write(f, line)
 
     # Computing the left hand side of the linear system
@@ -661,10 +661,10 @@ function writeControlledODEs(neuron::NeuronCB, controlledConductances::Vector{St
     line = "# Computing the solution of the linear system\n\t"
     write(f, line)
     if length(timescales) == length(controlledIndices)
-        line = "gr = \\(Smod, gDICr)\n\t"
+        line = "g_r = \\(Smod, gDICr)\n\t"
         write(f, line)
     else
-        line = "gr = transpose(Smod) * inv(Smod * transpose(Smod)) * gDICr\n\t"
+        line = "g_r = transpose(Smod) * inv(Smod * transpose(Smod)) * gDICr\n\t"
         write(f, line)
     end
 
@@ -673,7 +673,7 @@ function writeControlledODEs(neuron::NeuronCB, controlledConductances::Vector{St
     line = "# Error signals and control inputs\n\t"
     write(f, line)
     for (j, controlledIndex) in enumerate(controlledIndices)
-        line = "e"*neuron.ionCurrents[controlledIndex].name*" = gr["*string(j)*"] - g"*neuron.ionCurrents[controlledIndex].name*"\n\t"
+        line = "e"*neuron.ionCurrents[controlledIndex].name*" = g_r["*string(j)*"] - g"*neuron.ionCurrents[controlledIndex].name*"\n\t"
         write(f, line)
 
         line = "u"*neuron.ionCurrents[controlledIndex].name*" = Kp * e"*neuron.ionCurrents[controlledIndex].name*" + Ki * z"*neuron.ionCurrents[controlledIndex].name*"\n\t"
@@ -685,11 +685,11 @@ function writeControlledODEs(neuron::NeuronCB, controlledConductances::Vector{St
     line = "# ODEs of the controller\n\t"
     write(f, line)
     for controlledIndex in controlledIndices
-        line = "dx["*string(i)*"] = α * g"*neuron.ionCurrents[controlledIndex].name*" - g"*neuron.ionCurrents[controlledIndex].name*"i - β * g"*neuron.ionCurrents[controlledIndex].name*"i + u"*neuron.ionCurrents[controlledIndex].name*"\n\t"
+        line = "dx["*string(i)*"] = α * g"*neuron.ionCurrents[controlledIndex].name*" - α * g"*neuron.ionCurrents[controlledIndex].name*"i - β * g"*neuron.ionCurrents[controlledIndex].name*"i + u"*neuron.ionCurrents[controlledIndex].name*"\n\t"
         i = i + 1
         write(f, line)
 
-        line = "dx["*string(i)*"] = α * g"*neuron.ionCurrents[controlledIndex].name*" - g"*neuron.ionCurrents[controlledIndex].name*"i\n\t"
+        line = "dx["*string(i)*"] = α * g"*neuron.ionCurrents[controlledIndex].name*"i - α * g"*neuron.ionCurrents[controlledIndex].name*"\n\t"
         i = i + 1
         write(f, line)
 

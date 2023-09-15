@@ -1,6 +1,6 @@
 # Example on existing models in the litterature
 
-# Computing DICs and threshold voltage on the STG model
+## Computing DICs and threshold voltage on the STG model
 Once the STG model is initialized, it is very straightforward to compute DICs, sensitivity matrix or threshold voltage. For comparison, two STG models with different maximum ion channel conductances will be used. `STG_spiking` that exhibits a tonic spiking behavior with
 - sodium current: $\bar{g}_\mathrm{Na} =$ 4000;
 - T-type calcium current: $\bar{g}_\mathrm{CaT} =$ 3;
@@ -106,7 +106,7 @@ CC = plot(p1, p1zoom, p2, p2zoom, p3, p3zoom, layout=(3, 2), size=(900, 600), ma
 ```
 ![](https://raw.githubusercontent.com/arthur-fyon/NmodController.jl/main/docs/src/assets/NmodController_DICs_STGbursting.png)
 
-# Computing DICs and threshold voltage on the DA model
+## Computing DICs and threshold voltage on the DA model
 Once the DA model is initialized, it is very straightforward to compute DICs, sensitivity matrix or threshold voltage. For comparison, two DA models with different maximum ion channel conductances will be used. `DA_spiking` that exhibits a tonic spiking behavior with
 - sodium current: $\bar{g}_\mathrm{Na} =$ 30;
 - delayed rectified potassium current: $\bar{g}_\mathrm{Kd} =$ 5;
