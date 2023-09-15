@@ -697,7 +697,6 @@ function writeControlledODEs(neuron::NeuronCB, controlledConductances::Vector{St
         i = i + 1
         write(f, line)
     end
-    write(f, "\n")
 
     # Finishing the ODE function
     line = "end\n"
