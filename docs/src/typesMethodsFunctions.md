@@ -5,5 +5,5 @@
 ```
 ## Public Interface
 ```@autodocs
-Modules = [ISA]
+Modules = [NmodController]
 ```

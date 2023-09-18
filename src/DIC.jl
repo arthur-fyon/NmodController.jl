@@ -12,7 +12,7 @@ Refer to Drion et al., 2015 "Dynamic Input Conductances Shape Neuronal Spiking"
 - `gu`: ultraslow DIC. Must be of type Function.
 
 # Example
-```
+```jldoctest
 julia> Vth = computeThresholdVoltage(gf, gs, gu)
 -48.897088456154556
 ```
@@ -78,7 +78,7 @@ Refer to Drion et al., 2015 "Dynamic Input Conductances Shape Neuronal Spiking"
 - `scaled`: flag indicating if DICs or sensitivity matrix should be scaled by the leakage conductance. Optional. Default value is true.
 
 # Example
-```
+```jldoctest
 julia> gf, gs, gu = computeDICs(STG, STG_tauFast, STG_tauSlow, STG_tauUltraslow, tauCa=5000.);
 
 julia> [gf(0), gs(0), gu(0)]

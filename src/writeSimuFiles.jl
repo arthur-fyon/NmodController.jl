@@ -10,7 +10,7 @@ Returns nothing.
 - `filename`: name of the julia file that will contain the equations. Optional. Default value is "CBModelODEs.jl".
 
 # Example
-```
+```jldoctest
 julia> writeUncontrolledODEs(STG)
 ```
 """
@@ -242,7 +242,7 @@ Refer to Fyon et al., 2023 "Reliable neuromodulation from adaptive control of io
 - `filename`: name of the julia file that will contain the equations. Optional. Default value is "ControlledCBModelODEs.jl".
 
 # Example
-```
+```jldoctest
 julia> writeControlledODEs(STG, ["CaS", "A"], ["s", "u"])
 ```
 """
