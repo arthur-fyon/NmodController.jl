@@ -1,4 +1,5 @@
 using Documenter
+using NmodController
 
 makedocs(
     sitename = "NmodController",
@@ -17,7 +18,7 @@ makedocs(
                      "Examples of existing models"      => "simulating/examples.md",],
         "Types/Methods/Functions" => "typesMethodsFunctions.md",
     ],
-    modules = Module[]
+    modules = Module[NmodController]
 )
 
 # Documenter can also automatically deploy documentation to gh-pages.
