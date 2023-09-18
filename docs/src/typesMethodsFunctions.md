@@ -1,12 +1,10 @@
 # Types/Methods/Functions
 
 ## Index
-```
-[NmodController.IonCurrent](#ioncurrent)
-```
+- [`NmodController.IonCurrent`](#ioncurrent)
 ## Public Interface
-```
 ### NmodController.IonCurrent - Type
+```
 """
     ψ = AMFMcomp(C)
     ψ = AMFMcomp(a, ω, φ)
