@@ -1,4 +1,7 @@
 using Documenter
+
+using SymPy
+
 using NmodController
 
 makedocs(
