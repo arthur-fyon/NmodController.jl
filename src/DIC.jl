@@ -7,9 +7,9 @@ Compute threshold voltage of a specific conductance based model.
 Refer to Drion et al., 2015 "Dynamic Input Conductances Shape Neuronal Spiking"
 
 # Arguments
-- `gf`: fast DIC.
-- `gs`: slow DIC.
-- `gu`: ultraslow DIC.
+- `gf`: fast DIC. Must be of type Function.
+- `gs`: slow DIC. Must be of type Function.
+- `gu`: ultraslow DIC. Must be of type Function.
 
 # Example
 ```jldoctest
@@ -72,10 +72,10 @@ Refer to Drion et al., 2015 "Dynamic Input Conductances Shape Neuronal Spiking"
 - `tauFast`: fast time constant function, used to compute the DIC weights.
 - `tauSlow`: slow time constant function, used to compute the DIC weights.
 - `tauUltraslow`: ultraslow time constant function, used to compute the DIC weights.
-- `tauCa`: time constant of the calcium if the model is calcium dependent, used to the DIC weights for the calcium only. Optional.
-- `Mg`: magnesium concentration if the model is magnesium dependent. Optional.
-- `onlyS`: flag indicating if only the sensitivity matrix should be computed, for the case where no maximum ion channel conductances are in the model data structure. Optional.
-- `scaled`: flag indicating if DICs or sensitivity matrix should be scaled by the leakage conductance. Optional.
+- `tauCa`: time constant of the calcium if the model is calcium dependent, used to the DIC weights for the calcium only. Optional. Default value is NaN. Required if the neuron model is calcium dependent.
+- `Mg`: magnesium concentration if the model is magnesium dependent. Optional. Default value is NaN. Required if the neuron model is magnesium dependent.
+- `onlyS`: flag indicating if only the sensitivity matrix should be computed, for the case where no maximum ion channel conductances are in the model data structure. Optional. Default value is false.
+- `scaled`: flag indicating if DICs or sensitivity matrix should be scaled by the leakage conductance. Optional. Default value is true.
 
 # Example
 ```jldoctest

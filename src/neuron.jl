@@ -117,14 +117,14 @@ Note that the maximum ion channel conductance bar_gion is not contained in the i
 # Arguments
 - `name`: name of the ionic current.
 - `reversalPotential`: reversal Nernst potential of the ion, Eion.
-- `numberOfGatings`: number of gating variable(s) of the ionic current. Optional.
-- `exponents`: exponent(s) of the gating variable(s), a1 (and a2). Optional.
-- `activationSteadyStateGating`: equilibrium function of the activation gating variable. Optional.
-- `activationTimeConstant`: time constant function/constant of the activation gating variable. Optional.
-- `inactivationSteadyStateGating`: equilibrium function of the inactivation gating variable. Optional.
-- `inactivationTimeConstant`: time constant function/constant of the inactivation gating variable. Optional.
-- `calciumDependency`: flag indicating if the ionic current depends on calcium. Optional.
-- `MgDependency`: flag indicating if the ionic current depends on magnesium. Optional.
+- `numberOfGatings`: number of gating variable(s) of the ionic current. Optional. Default value is 1.
+- `exponents`: exponent(s) of the gating variable(s), a1 (and a2). Optional. Default value is 1. Must be a Vector of length 2 if `numberOfGatings` = 2.
+- `activationSteadyStateGating`: equilibrium function of the activation gating variable. Optional. Default value is 0. Must be of type Function, always required.
+- `activationTimeConstant`: time constant function/constant of the activation gating variable. Optional. Default value is NaN. Must be of type Function or an Int64/Float64 different from NaN, always required.
+- `inactivationSteadyStateGating`: equilibrium function of the inactivation gating variable. Optional. Default value is 0. Must be of type Function, required if `numberOfGatings` = 2.
+- `inactivationTimeConstant`: time constant function/constant of the inactivation gating variable. Optional. Default value is NaN. Must be of type Function or Int64/Float64 different from NaN, required if `numberOfGatings` = 2.
+- `calciumDependency`: flag indicating if the ionic current depends on calcium. Optional. Default value is false. Required if `activationSteadyStateGating` second argument is calcium.
+- `MgDependency`: flag indicating if the ionic current depends on magnesium. Optional. Default value is false. Required if `activationSteadyStateGating` second argument is magnesium.
 
 # Example
 ```jldoctest
@@ -202,8 +202,8 @@ end
 Initialize an intracellular calcium dynamics data structure. The ODE describing intracellular calcium dynamics must be of type: tau_Ca * dCa/dt = (e1 * Iion_1 + ... + en * Iion_n - Ca + CaEquilibrium).
 
 # Arguments
-- `currentNames`: names of the calcium ionic current Iion_i.
-- `coefficients`: coefficient(s) of the ionic currents, ei.
+- `currentNames`: names of the calcium ionic current Iion_i. Must be of the same length as `coefficients`.
+- `coefficients`: coefficient(s) of the ionic currents, ei. Must be of the same length as `currentNames`.
 - `nernstEquilibriumValue`: Equilibrium value of the intracellular calcium with null current, CaEquilibrium.
 - `timeConstant`: time constant of the intracellular calcium dynamics, tau_Ca.
 
@@ -251,11 +251,11 @@ Initialize a conductance based model data structure. The leakage current must be
 
 # Arguments
 - `ionCurrents`: vector of previously defined active ion current data structures contained in the model.
-- `C`: membrane capacitance. Optional.
-- `leakageConductance`: conductance of the leakage current, gleak. Optional.
-- `reversaleLeakagePotential`: reversal Nernst potential of the leakage current, Eleak. Optional.
-- `calciumDynamics`: data structure defining intracellular calcium dynamics. Optional.
-- `maximumConductances`: vector of maximum ion channel conductances of currents contained in `ionCurrents`. Optional.
+- `C`: membrane capacitance. Optional. Default values is 1.
+- `leakageConductance`: conductance of the leakage current, gleak. Optional. Default value is 1.
+- `reversaleLeakagePotential`: reversal Nernst potential of the leakage current, Eleak. Optional. Default value is -50.
+- `calciumDynamics`: data structure defining intracellular calcium dynamics. Optional. Must be of type `CalciumDynamic` is at least one ionic current is calcium dependent.
+- `maximumConductances`: vector of maximum ion channel conductances of currents contained in `ionCurrents`. Optional. Default value is a vector full of NaNs. Must be of the same length as `ionCurrents`.
 
 # Example
 ```jldoctest

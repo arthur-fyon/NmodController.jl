@@ -2,12 +2,12 @@
     writeUncontrolledODEs(neuron::NeuronCB; 
         filename::String="CBModelODEs.jl")
 
-Write a julia file that contains all ODEs for a specific conductance based model. The equations can be integrated using the DifferentialEquations.jl package.
+Write a julia file that contains a function computing all ODEs for a specific conductance based model. The function have the same name as the file, without the ".jl" extension. The equations can be integrated using the DifferentialEquations.jl package.
 Returns nothing.
 
 # Arguments
 - `neuron`: data structure containing the conductance based model of interest.
-- `filename`: name of the julia file that will contain the equations. Optional.
+- `filename`: name of the julia file that will contain the equations. Optional. Default value is "CBModelODEs.jl".
 
 # Example
 ```jldoctest
@@ -232,14 +232,14 @@ end
         controlledDICs::Vector{String}; 
         filename::String="ControlledCBModelODEs.jl")
 
-Write a julia file that contains all ODEs for a specific conductance based model that is coupled with a neuromodulation controller. The equations can be integrated using the DifferentialEquations.jl package.
+Write a julia file that contains function computing all ODEs for a specific conductance based model that is coupled with a neuromodulation controller. The function have the same name as the file, without the ".jl" extension. The equations can be integrated using the DifferentialEquations.jl package.
 Refer to Fyon et al., 2023 "Reliable neuromodulation from adaptive control of ion channel expression". Returns nothing.
 
 # Arguments
 - `neuron`: data structure containing the conductance based model of interest.
-- `controlledConductances`: vector of strings that contains the names of the conductances the controller outputs.
-- `controlledDICs`: vector of strings that contains the names of the DICs the controller gets in input.
-- `filename`: name of the julia file that will contain the equations. Optional.
+- `controlledConductances`: vector of strings that contains the names of the conductances the controller outputs. Its length must be higher or equal then the length of `controlledDICs`.
+- `controlledDICs`: vector of strings that contains the names of the DICs the controller gets in input. Its length must be lower or equal than the length of `controlledConductances`.
+- `filename`: name of the julia file that will contain the equations. Optional. Default value is "ControlledCBModelODEs.jl".
 
 # Example
 ```jldoctest
