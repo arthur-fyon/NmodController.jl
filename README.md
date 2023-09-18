@@ -4,8 +4,6 @@
 
 # NmodController.jl: A simple way to use conductance based models and to simulate them
 
-![](https://raw.githubusercontent.com/arthur-fyon/NmodController.jl/main/docs/src/assets/logo.png)
-
 This is a suite for numerically simulating conductance based model when coupled with [*DifferentialEquations.jl*](https://github.com/SciML/DifferentialEquations.jl). The purpose of this package is to supply easy definition and simulation of any conductance based model. Moreover, it permits easy broadcasting of Dynamics Input Conductance theory ([paper](https://www.eneuro.org/content/2/1/ENEURO.0031-14.2015)) and of a robust neuromodulation controller ([paper](https://orbi.uliege.be/handle/2268/304427)).
 
 ## Installation
@@ -19,3 +17,7 @@ This is a suite for numerically simulating conductance based model when coupled 
 2) Enter the package manager in REPL by pressing `]` then add the package by typing `dev NmodController` rather than `add NmodController`.
 
 ## [Documentation](https://arthur-fyon.github.io/NmodController.jl/)
+
+## Example image
+
+![](https://raw.githubusercontent.com/arthur-fyon/NmodController.jl/main/docs/src/assets/STG_simu_spiking_controlled.png)
