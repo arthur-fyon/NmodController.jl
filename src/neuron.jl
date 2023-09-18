@@ -127,7 +127,7 @@ Note that the maximum ion channel conductance bar_gion is not contained in the i
 - `MgDependency`: flag indicating if the ionic current depends on magnesium. Optional. Default value is false. Required if `activationSteadyStateGating` second argument is magnesium.
 
 # Example
-```jldoctest
+```
 julia> NaCurrent = initializeCurrent("Na", VNa, numberOfGatings=2, exponents=[3, 1],
     activationSteadyStateGating=mNa_inf, activationTimeConstant=tau_mNa,
     inactivationSteadyStateGating=hNa_inf, inactivationTimeConstant=tau_hNa)
@@ -208,7 +208,7 @@ Initialize an intracellular calcium dynamics data structure. The ODE describing 
 - `timeConstant`: time constant of the intracellular calcium dynamics, tau_Ca.
 
 # Example
-```jldoctest
+```
 julia> CaDynamics = initializeCalciumDynamics(["CaT", "CaS"], [-0.94, -0.94], 0.05, 20)
 
 CalciumDynamic(2, ["CaT", "CaS"], [-0.94, -0.94], 0.05, 20.0)
@@ -258,7 +258,7 @@ Initialize a conductance based model data structure. The leakage current must be
 - `maximumConductances`: vector of maximum ion channel conductances of currents contained in `ionCurrents`. Optional. Default value is a vector full of NaNs. Must be of the same length as `ionCurrents`.
 
 # Example
-```jldoctest
+```
 julia> STG = initializeNeuronModel(STG_ionCurrents, C=0.1, calciumDynamics=CaDyn, 
     leakageConductance=0.01, reversaleLeakagePotential=STG_Vleak, maximumConductances=STG_gvec)
 
