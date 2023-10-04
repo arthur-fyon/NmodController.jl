@@ -1,12 +1,14 @@
 # Additional functions to the SymPy package to compute partial derivatives of 2D functions
 function partialDiff1(f::Function, n::Int64=1)
     @vars x y
-    sympy.diff(f(x, y), x, n)
+    diff1 = sympy.diff(f(x, y), x, n)
+    return lambdify(diff1, (x, y))
 end
 
 function partialDiff2(f::Function, n::Int64=1)
     @vars x y
-    sympy.diff(f(x, y), y, n)
+    diff2 = sympy.diff(f(x, y), y, n)
+    return lambdify(diff2, (x, y))
 end
 
 # Utility function that transform any constant to a function or does nothing if it is already a function
