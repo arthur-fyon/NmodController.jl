@@ -121,7 +121,7 @@ STG = initializeNeuronModel(STG_ionCurrents, C=0.1, calciumDynamics=CaDyn, leaka
 
 
 ## Initializing the DA model
-The STG model is composed of 6 voltage gated ionic currents which one is magnesium dependent:
+The DA model is composed of 6 voltage gated ionic currents which one is magnesium dependent:
 1. Transient sodium current $I_\mathrm{Na}$ (2 gating variables);
 2. Delayed rectified potassium current $I_\mathrm{Kd}$ (1 gating variable);
 3. L-type calcium current $I_\mathrm{CaL}$ (1 gating variable);
